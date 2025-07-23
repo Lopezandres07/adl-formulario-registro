@@ -34,7 +34,7 @@ describe('Escenario 2: Registro Fallido por Falta de Datos Obligatorios', () => 
     cy.get('#email').type('test@example.com')
     cy.get('#password').type('MiClave123')
     cy.get('#confirmPassword').type('MiClave123')
-    cy.get('Registrarse').click()
+    cy.contains('Registrarse').click()
 
     cy.contains('El nombre es obligatorio.').should('be.visible')
 
