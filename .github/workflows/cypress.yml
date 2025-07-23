@@ -1,0 +1,42 @@
+name: Pruebas E2E con Cypress y Mochawesome
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ejecutar-cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Construir el proyecto
+        run: npm run build
+
+      - name: Ejecutar pruebas E2E con Cypress + Mochawesome
+        if: always()
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run preview
+          wait-on: 'http://localhost:4173'
+          wait-on-timeout: 60
+          command: npm run test:e2e:cypress
+
+      - name: Guardar reportes y artefactos (HTML + screenshots + videos)
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-cypress
+          path: |
+            cypress/reports
+            cypress/screenshots
+            cypress/videos
