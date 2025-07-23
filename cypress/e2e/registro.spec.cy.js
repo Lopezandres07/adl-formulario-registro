@@ -31,10 +31,10 @@ describe('Escenario 2: Registro Fallido por Falta de Datos Obligatorios', () => 
   })
 
   it('Debe mostrar mensajes de error cuando se omiten campos obligatorios', () => {
-    cy.get('input[name="email"]').type('test@example.com')
-    cy.get('input[name="password"]').type('MiClave123')
-    cy.get('input[name="confirmPassword"]').type('MiClave123')
-    cy.get('button[type="submit"]').click()
+    cy.get('#email').type('test@example.com')
+    cy.get('#password').type('MiClave123')
+    cy.get('#confirmPassword').type('MiClave123')
+    cy.get('Registrarse').click()
 
     cy.contains('El nombre es obligatorio.').should('be.visible')
 
